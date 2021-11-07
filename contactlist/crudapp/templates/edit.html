@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body <div class="cotainer-fluid w-25 mx-auto ">
+  {% csrf_token %}
+
+  <form action="" method="POST">
+
+    <fieldset class="border border-dark rounded px-auto py-auto">
+      <legend class="text-center">Edit Details</legend>
+      <div class="form-group">
+        <label for="fname">First Name</label>
+        <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name" value="{{cform.fname }}">
+
+      </div>
+
+      <div class="form-group">
+        <label for="mname">Middle Name</label>
+        <input type="text" class="form-control" id="mname" name="mname" placeholder="Enter Middle Name" value="{{cform.mname }}">
+
+      </div>
+
+      <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name" value="{{cform.lname }}">
+      </div>
+
+      <div class="form-group">
+        <label for="address_type">Address Type</label>
+
+        <select class="custom-select custom-select-sm" id="address_type" name="address_type">
+          <option selected>Open this select address_type</option>
+          <option value="home" {% if aform.address_type == 'home' %}  selected {% endif %}>Home</option>
+          <option value="work" {% if aform.address_type == 'work' %}  selected {% endif %}>Work</option>
+          <option value="other" {% if aform.address_type == 'other' %}  selected {% endif %}>Other</option>
+        </select>
+
+        <!-- <input type="text" class="form-control" id="lname" name="lname"  placeholder="Enter Last Name"> -->
+      </div>
+
+      <div class="form-group">
+        <label for="Address">Address</label>
+        <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address" value="{{aform.address }}">
+      </div>
+
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" class="form-control" id="city" name="city" placeholder="Enter City" value="{{aform.city }}">
+      </div>
+
+      <div class="form-group">
+        <label for="state">State</label>
+        <input type="text" class="form-control" id="state" name="state" placeholder="Enter State" value="{{aform.state }}">
+      </div>
+
+      <div class="form-group">
+        <label for="Zipcode">Zipcode</label>
+        <input type="number" class="form-control" id="zipcode" name="zipcode" placeholder="Enter Zipcode" min="10000"
+          max="99999" required value="{{aform.zipcode}}">
+      </div>
+
+      <div class="form-group">
+        <label for="phone_type" >Phone Type</label>
+
+        <select class="custom-select custom-select-sm" id="phone_type" name="phone_type">
+          <option selected>Open this select phone_type</option>
+          <option value="home" {% if pform.phone_type == 'home' %}  selected {% endif %}>Home</option>
+          <option value="work" {% if pform.phone_type == 'work' %}  selected {% endif %}>Work</option>
+          <option value="other" {% if pform.phone_type == 'other' %}  selected {% endif %}>Other</option>
+        </select>
+
+        <!-- <input type="text" class="form-control" id="lname" name="lname"  placeholder="Enter Last Name"> -->
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="area_code">Area Code</label>
+        <input type="number" class="form-control" id="area_code" name="area_code" placeholder="Enter Area Code"
+          min="100" max="999" value="{{pform.area_code }}">
+      </div>
+
+      <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone" pattern="[0-9]{10}" value="{{pform.number}}">
+      </div>
+
+      <div class="form-group">
+        <label for="date_type">Date Type</label>
+
+        <select class="custom-select custom-select-sm"  id="date_type" name="date_type" placeholder="Enter Date Type">
+          <option selected>Open this select Date_Type</option>
+          <option value="birthday" {% if dform.date_type == 'birthday' %} selected {% endif %}>Birthday</option>
+          <option value="aniversary" {% if dform.date_type == 'aniversary' %} selected {% endif %}>Aniversary</option>
+          <option value="other" {% if dform.date_type == 'other' %} selected {% endif %}>Other</option>
+        </select>
+
+        <!-- <input type="text" class="form-control" id="lname" name="lname"  placeholder="Enter Last Name"> -->
+      </div>
+
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date" value="{{dform.date|date:"Y-m-d" }}" >
+      </div>
+
+
+      <!-- <div class="form-group">
+        <label for="mname">Address Type</label>
+        <input type="text" class="form-control" id="mname" name="mname"  placeholder="Enter Middle Name">
+      </div>
+
+      <div class="form-group">
+        <label for="mname">Middle Name</label>
+        <input type="text" class="form-control" id="mname" name="mname"  placeholder="Enter Middle Name">
+      </div> -->
+
+
+      <!-- <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div> -->
+      <center>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </center>
+    </fieldset>
+
+  </form>
+
+  </div>
+
+  <!-- Optional JavaScript; choose one of the two! -->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>

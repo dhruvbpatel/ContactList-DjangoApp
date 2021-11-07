@@ -1,0 +1,125 @@
+!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+
+<body>
+    <form method="POST" class="post-form" action="/viewPage">
+        {% csrf_token %}
+        <div class="container">
+            <br>
+            <div class="form-group row">
+                <label class="col-sm-1 col-form-label"></label>
+                <div class="col-sm-4">
+                    <h3>Enter Details</h3>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">First name</label>
+                <div class="col-sm-4">
+                    {{ cform.fname }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">middle Name:</label>
+                <div class="col-sm-4">
+                    {{ cform.mname }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">last name:</label>
+                <div class="col-sm-4">
+                    {{ cform.lname }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">address type:</label>
+                <div class="col-sm-4">
+                    {{ aform.address_type }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">address</label>
+                <div class="col-sm-4">
+                    {{ aform.address }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">city</label>
+                <div class="col-sm-4">
+                    {{ aform.city }}
+    
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">state</label>
+                <div class="col-sm-4">
+                    {{ aform.state }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">zipcode</label>
+                <div class="col-sm-4">
+                    {{ pform.zipcode }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Phone type:</label>
+                <div class="col-sm-4">
+                    {{ pform.phone_type }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Area code:</label>
+                <div class="col-sm-4">
+                    {{ pform.area_code }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Number:</label>
+                <div class="col-sm-4">
+                    {{ pform.number }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">date type:</label>
+                <div class="col-sm-4">
+                    {{ dform.date_type }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Date:</label>
+                <div class="col-sm-4">
+                    {{ dform.date }}
+                </div>
+            </div>
+{% comment %} 
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Employee Contact:</label>
+                <div class="col-sm-4">
+                    {{ form.econtact }}
+                </div>
+            </div>
+            <div class="form-group row"> {% endcomment %}
+                <label class="col-sm-1 col-form-label"></label>
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
