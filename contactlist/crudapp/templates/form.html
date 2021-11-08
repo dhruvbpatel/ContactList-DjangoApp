@@ -26,20 +26,20 @@
 
 </head>
 <nav class="navbar navbar-dark bg-dark justify-content-md-center">
-  
-    
-      <div class="m-20 text-center ">
-        <a href="/show">
-          <button type="button" class="btn btn-info">Show Data</button>
-        </a>
-        <a href="/show_list">
-          <button type="button" class="btn btn-info">Search</button>
-        </a>
-    
-      </div>
-  
 
-  
+
+  <div class="m-20 text-center ">
+    <a href="/show">
+      <button type="button" class="btn btn-info">Show Data</button>
+    </a>
+    <a href="/search">
+      <button type="button" class="btn btn-info">Search</button>
+    </a>
+
+  </div>
+
+
+
 </nav>
 
 <body class="card bg-light mt-10">
@@ -47,150 +47,150 @@
     <h3 class="text-center font-weight-bold ">Contact List App</h3>
   </div>
 
-   <div class=" cotainer mx-auto w-50 pt-20 " style="margin-top:100px">
-  {% csrf_token %}
+  <div class=" cotainer mx-auto w-50 pt-20 " style="margin-top:100px">
+    {% csrf_token %}
 
-  
 
-  <form action="" method="POST" nonvalidate class="mx-auto "> 
-    <!-- <fieldset> -->
-    <fieldset class="border border-dark rounded mt-auto w-auto" style="padding:10px">
-      <legend class="text-center ">Add Contact Details</legend>
-      <div class="form-group">
-        <label for="fname">First Name</label>
-        <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name" required>
 
-      </div>
+    <form action="" method="POST" nonvalidate class="mx-auto ">
+      <!-- <fieldset> -->
+      <fieldset class="border border-dark rounded mt-auto w-auto" style="padding:10px">
+        <legend class="text-center ">Add Contact Details</legend>
+        <div class="form-group">
+          <label for="fname">First Name</label>
+          <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter First Name" required>
 
-      <div class="form-group">
-        <label for="mname">Middle Name</label>
-        <input type="text" class="form-control" id="mname" name="mname" placeholder="Enter Middle Name">
+        </div>
 
-      </div>
+        <div class="form-group">
+          <label for="mname">Middle Name</label>
+          <input type="text" class="form-control" id="mname" name="mname" placeholder="Enter Middle Name">
 
-      <div class="form-group">
-        <label for="lname">Last Name</label>
-        <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name" required>
-      </div>
+        </div>
 
-      <div id="address_container" class="d-none">
-        <div class="address_form">
-          <h5 class="my-2">Add Address Info</h5>
-          <div class="form-group">
-            <label for="address_type">Address Type</label>
+        <div class="form-group">
+          <label for="lname">Last Name</label>
+          <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Last Name" required>
+        </div>
 
-            <select class="custom-select custom-select-sm" id="address_type" name="address_type">
-              <option selected disabled value="">Open this select address_type</option>
-              <option value="home">Home</option>
-              <option value="work">Work</option>
-              <option value="other">Other</option>
-            </select>
+        <div id="address_container" class="d-none">
+          <div class="address_form">
+            <h5 class="my-2">Add Address Info</h5>
+            <div class="form-group">
+              <label for="address_type">Address Type</label>
 
-            <!-- <input type="text" class="form-control" id="lname" name="lname"  placeholder="Enter Last Name"> -->
-          </div>
+              <select class="custom-select custom-select-sm" id="address_type" name="address_type">
+                <option selected disabled value="">Open this select address_type</option>
+                <option value="home">Home</option>
+                <option value="work">Work</option>
+                <option value="other">Other</option>
+              </select>
 
-          <div class="form-group">
-            <label for="Address">Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
-          </div>
+              <!-- <input type="text" class="form-control" id="lname" name="lname"  placeholder="Enter Last Name"> -->
+            </div>
 
-          <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
-          </div>
+            <div class="form-group">
+              <label for="Address">Address</label>
+              <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
+            </div>
 
-          <div class="form-group">
-            <label for="state">State</label>
-            <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
-          </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" class="form-control" id="city" name="city" placeholder="Enter City">
+            </div>
 
-          <div class="form-group">
-            <label for="Zipcode">Zipcode</label>
-            <input type="number" class="form-control" id="zipcode" name="zipcode" placeholder="Enter Zipcode"
-              min="10000" max="99999">
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" class="form-control" id="state" name="state" placeholder="Enter State">
+            </div>
+
+            <div class="form-group">
+              <label for="Zipcode">Zipcode</label>
+              <input type="number" class="form-control" id="zipcode" name="zipcode" placeholder="Enter Zipcode"
+                min="10000" max="99999">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="my-2 text-center">
-        <button class="btn btn-info" id="address_btn">
-          Add Another Address
-        </button>
-      </div>
+        <div class="my-2 text-center">
+          <button class="btn btn-info" id="address_btn">
+            Add Another Address
+          </button>
+        </div>
 
 
-      <div id="number_container" class="d-none">
-        <div id="number_form">
+        <div id="number_container" class="d-none">
+          <div id="number_form">
 
-          <h5 class="my-2">Add Number Info</h5>
+            <h5 class="my-2">Add Number Info</h5>
 
-          <div class="form-group">
-            <label for="phone_type">Phone Type</label>
+            <div class="form-group">
+              <label for="phone_type">Phone Type</label>
 
-            <select class="custom-select custom-select-sm" id="phone_type" name="phone_type">
-              <option selected disabled value="">Open this select phone_type</option>
-              <option value="home">Home</option>
-              <option value="work">Work</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
+              <select class="custom-select custom-select-sm" id="phone_type" name="phone_type">
+                <option selected disabled value="">Open this select phone_type</option>
+                <option value="home">Home</option>
+                <option value="work">Work</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label for="area_code">Area Code</label>
-            <input type="number" class="form-control" id="area_code" name="area_code" placeholder="Enter Area Code"
-              min="100" max="999">
-          </div>
+            <div class="form-group">
+              <label for="area_code">Area Code</label>
+              <input type="number" class="form-control" id="area_code" name="area_code" placeholder="Enter Area Code"
+                min="100" max="999">
+            </div>
 
-          <div class="form-group">
-            <label for="Phone">Phone</label>
-            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone"
-              pattern="[0-9]{10}">
+            <div class="form-group">
+              <label for="Phone">Phone</label>
+              <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter Phone"
+                pattern="[0-9]{7}">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="my-2 text-center">
-        <button class="btn btn-info" id="number_btn">Add Another Number</button>
-      </div>
+        <div class="my-2 text-center">
+          <button class="btn btn-info" id="number_btn">Add Another Number</button>
+        </div>
 
 
-      <div id="date_container" class="d-none">
-        <div id="date_form">
-          <h5 class="my-2">Add Date Info</h5>
-          <div class="form-group">
-            <label for="date_type">Date Type</label>
+        <div id="date_container" class="d-none">
+          <div id="date_form">
+            <h5 class="my-2">Add Date Info</h5>
+            <div class="form-group">
+              <label for="date_type">Date Type</label>
 
-            <select class="custom-select custom-select-sm" id="date_type" name="date_type"
-              placeholder="Enter Date Type">
-              <option selected value="" disabled>Open this select Date_Type</option>
-              <option value="birthday">Birthday</option>
-              <option value="aniversary">Aniversary</option>
-              <option value="other">Other</option>
-            </select>
+              <select class="custom-select custom-select-sm" id="date_type" name="date_type"
+                placeholder="Enter Date Type">
+                <option selected value="" disabled>Open this select Date_Type</option>
+                <option value="birthday">Birthday</option>
+                <option value="aniversary">Aniversary</option>
+                <option value="other">Other</option>
+              </select>
 
-            <!-- <input type="text" class="form-control" id="lname" name="lname"  placeholder="Enter Last Name"> -->
-          </div>
+              <!-- <input type="text" class="form-control" id="lname" name="lname"  placeholder="Enter Last Name"> -->
+            </div>
 
-          <div class="form-group">
-            <label for="date">Date</label>
-            <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date">
+            <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date">
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="my-2 text-center">
+        <div class="my-2 text-center">
 
-        <button class="btn btn-info" id="date_btn">Add Another Date</button>
+          <button class="btn btn-info" id="date_btn">Add Another Date</button>
 
-      </div>
+        </div>
 
 
-      <center>
-        <button type="submit" class="btn btn-success">Submit</button>
-      </center>
-    </fieldset>
+        <center>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </center>
+      </fieldset>
 
-  </form>
+    </form>
 
   </div>
 
@@ -206,7 +206,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
-    <!-- <div class="mx-20 d-flex justify-content-around my-20">
+  <!-- <div class="mx-20 d-flex justify-content-around my-20">
       <a href="/show">
         <button type="submit" class="btn btn-info  d-flex justify-content-around mb-20">Show Data</button>
       </a>

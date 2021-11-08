@@ -52,7 +52,7 @@ def listView(request):
             for dat in date_set:
                 cont_id.append(dat.contact_id)
 
-            # print(parser.parse(x))
+            
             print(contact_set)
             print(address_set)
             print(phone_set)
@@ -66,17 +66,40 @@ def listView(request):
             )
             address_set = Address.objects.filter(
                 Q(address__contains = x) |
+                Q(address_type = x) |
                 Q(city__contains = x) |
                 Q(state__contains = x) 
             )
+
+            phone_set = Phone.objects.filter(
+                Q(phone_type__icontains = x) 
+                # Q(area_code__icontains = int(x)) |
+                # Q(number__icontains = int(x)) 
+            )
+
+            date_set = Date.objects.filter(
+                Q(date_type__icontains = x)
+                # Q(date__regex = x)
+            )
+
+
+
             for cont in contact_set:
                 cont_id.append(cont.id)
             for adder in address_set:
                 cont_id.append(adder.contact_id)
+            for pho in phone_set:
+                cont_id.append(pho.contact_id)
+            for dt in date_set:
+                cont_id.append(dt.contact_id)
+
         print(contact_set)
         print(address_set)
+        print(phone_set)
+        print(date_set)
 
         cont_id = list(set(cont_id))
+
         for cont in cont_id:
             contacts.append(Contact.objects.get(id=cont))
     
@@ -107,7 +130,7 @@ def show(request):
 
 
 
-class editView(View):
+# class editView(View):
 
     def get(self, request,pk):
 
@@ -189,7 +212,7 @@ class editView(View):
         d_obj.save()
 
 
-        return redirect('/show')
+        return redirect('/search')
 
 class updateView(View):
     def get(self,request,pk):
@@ -341,7 +364,7 @@ class updateView(View):
                 date = dates[-1]
                 )
 
-        return redirect('/show')
+        return redirect('/search')
         
 
 
@@ -453,7 +476,7 @@ class deleteView(View):
         cont_obj = Contact.objects.get(pk=pk)
         cont_obj.delete()
 
-        return redirect('/show')
+        return redirect('/search')
 
 
 

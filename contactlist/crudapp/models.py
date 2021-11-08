@@ -6,9 +6,9 @@ import datetime
 
 class Contact(models.Model):
     # contact = models.AutoField(primary_key=True)
-    fname = models.CharField(max_length=120)
-    mname = models.CharField(max_length=120,blank=True,null=True)
-    lname = models.CharField(max_length=120)
+    fname = models.CharField(max_length=100)
+    mname = models.CharField(max_length=100,blank=True,null=True)
+    lname = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'contact'
@@ -29,7 +29,7 @@ class Address(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, related_name='addresscontact')
     address_type = models.CharField(choices=address_choice,blank=True, null=True,max_length=20)
     address = models.CharField(max_length=500,blank=True, null=True)
-    city = models.CharField(max_length=120,blank=True, null=True)
+    city = models.CharField(max_length=100,blank=True, null=True)
     state = models.CharField(max_length=20,blank=True, null=True)
     zipcode = models.IntegerField(max_length=5,validators=[MinValueValidator(10000),MaxValueValidator(99999)],null=True,blank=True)
 

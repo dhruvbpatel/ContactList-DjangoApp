@@ -26,7 +26,7 @@
 <body <div class="cotainer-fluid w-25 mx-auto ">
   {% csrf_token %}
 
-  <form action="" method="POST">
+  <form action="" method="POST" nonvalidate>
 
     <fieldset class="border border-dark rounded px-auto py-auto">
       <legend class="text-center">Edit Details</legend>
@@ -109,7 +109,7 @@
 
       <div class="form-group">
         <label for="Phone">Phone</label>
-        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone" pattern="[0-9]{10}"
+        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone" pattern="[0-9]{77}"
           value="{{pform.number}}">
       </div>
 
@@ -129,7 +129,7 @@
       <div class="form-group">
         <label for="date">Date</label>
         <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date"
-          value="{{dform.date|date:" Y-m-d" }}">
+          value="{{dform.date|date:"Y-m-d" }}">
       </div>
 
 

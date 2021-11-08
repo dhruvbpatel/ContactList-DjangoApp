@@ -19,7 +19,7 @@ from crudapp import views
 
 urlpatterns = [
     path('', views.insertView.as_view(), name='addview'),
-    path('show_list/', views.listView, name="contact_list"),
+    path('search/', views.listView, name="contact_list"),
     # path('edit/<int:pk>/', views.editView.as_view(), name='editView'),
     path('edit/<int:pk>/', views.updateView.as_view(), name='editView'),
 

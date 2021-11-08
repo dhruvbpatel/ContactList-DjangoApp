@@ -10,21 +10,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
     <title>Edit Contact</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <h1 style="text-align: center">Create Contact</h1>
+    <div class="card bg-light mt-10">
+        <div class="row justify-content-center container-fluid ">
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-                crossorigin="anonymous"></script>
 
-            <form class="g-3 mb-5 ms-2" style="width: 300px" method="POST">
+            <h1 style="text-align: center">Update </h1>
+
+
+
+            <form class="" style="width: 500px" method="POST" class="mx-auto">
                 {% csrf_token %}
+                <fieldset class="border border-dark rounded mt-auto w-auto" style="padding:10px">
+                    <legend class="text-center ">Edit Contact Details</legend>
                 <div id="name_container">
                     <div class="">
                         <label class="form-label">First Name</label>
@@ -45,7 +49,7 @@
                 <div id="address_for_loop">
 
                     {% for obj in aform %}
-                    <h5 class="my-2">Add Address Info</h5>
+                    <h5 class="my-2"> Address </h5>
                     <div class="">
                         <label class="form-label">Address Type</label>
                         <select class="form-select" aria-label="Select" name="address_type" id="address_type">
@@ -81,7 +85,7 @@
                 </div>
                 <div id="address_container" class="d-none">
                     <div id="address_form">
-                        <h5 class="my-2">Add Address Info</h5>
+                        <h5 class="my-2"> Address </h5>
                         <div class="">
                             <label class="form-label">Address Type</label>
                             <select class="form-select" aria-label="Select" name="address_type" id="address_type">
@@ -115,13 +119,13 @@
                     </div>
                 </div>
                 <div class="my-2 text-center">
-                    <button class="btn btn-primary" id="address_btn">
-                        Add Address
+                    <button class="btn btn-info" id="address_btn">
+                        Address
                     </button>
                 </div>
                 <div id="number_for_loop">
                     {% for obj in pform %}
-                    <h5 class="my-2">Add Number Info</h5>
+                    <h5 class="my-2"> Number </h5>
                     <div class="">
                         <label class="form-label">Phone No. Type</label>
                         <select class="form-select" aria-label="Select" name="phone_type" id="phone_type">
@@ -146,7 +150,7 @@
                 </div>
                 <div id="number_container" class="d-none">
                     <div id="number_form">
-                        <h5 class="my-2">Add Number Info</h5>
+                        <h5 class="my-2"> Number </h5>
                         <div class="">
                             <label class="form-label">Phone No. Type</label>
                             <select class="form-select" aria-label="Select" name="phone_type" id="phone_type">
@@ -171,13 +175,14 @@
 
                 <div class="my-2 text-center">
                     <div class="my-2 text-center">
-                        <button class="btn btn-primary" id="number_btn">Add Number</button>
+                        <button class="btn btn-info" id="number_btn">Numbers</button>
                     </div>
 
 
                     <div id="date_for_loop">
                         {% for obj in dform %}
-                        <h5 class="my-2">Add Date Info</h5>
+                        <h5 class="my-2">
+                         Date </h5>
                         <div class="">
                             <label class="form-label">Date type</label>
                             <select class="form-select" aria-label="Default select example" id="date_type"
@@ -191,14 +196,16 @@
                         </div>
                         <div class="">
                             <label class="form-label">Date</label> <br>
-                            <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date"
-                            value="{{dform.date| date:"Y-m-d" }}">
+                            {% comment %} <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date"
+                                value={{dform.date| date:"Y-m-d"}}> {% endcomment %}
+                                <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date"
+                    value="{{obj.date|date:"Y-m-d" }}">
                         </div>
                         {% endfor %}
                     </div>
                     <div id="date_container" class="d-none">
                         <div id="date_form">
-                            <h5 class="my-2">Add Date Info</h5>
+                            <h5 class="my-2">Add Date </h5>
                             <div class="">
                                 <label class="form-label">Date type</label>
                                 <select class="form-select" aria-label="Default select example" id="date_type"
@@ -216,12 +223,19 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" id="date_btn">Add Date</button>
+                    <button class="btn btn-info mt-2" id="date_btn">Add Date</button>
                 </div>
                 <div class="my-2 text-center">
-                    <button type="submit" class="btn btn-warning">Update</button>
+                    <a href="/search">
+                        <button type="button" class="btn btn-danger ">cancel</button>
+                    </a>
+                    <button type="submit" class="btn btn-primary">Update</button>
+
                 </div>
+                </fieldset>
             </form>
+      
+
         </div>
     </div>
 </body>
