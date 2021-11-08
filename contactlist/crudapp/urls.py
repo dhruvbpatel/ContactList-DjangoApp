@@ -19,12 +19,12 @@ from crudapp import views
 
 urlpatterns = [
     path('', views.insertView.as_view(), name='addview'),
-    path('show_list/', views.ContactList.as_view(), name="contact_list"),
+    path('show_list/', views.listView, name="contact_list"),
     # path('edit/<int:pk>/', views.editView.as_view(), name='editView'),
     path('edit/<int:pk>/', views.updateView.as_view(), name='editView'),
 
     path('delete/<int:pk>/', views.deleteView.as_view(), name='deleteView'),
-    path('data-table/', views.data_list_table, name="showData"),
+    # path('data-table/', views.data_list_table, name="showData"),
     path('show/',views.show),
 
 ]

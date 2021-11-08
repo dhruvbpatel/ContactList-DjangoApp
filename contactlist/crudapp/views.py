@@ -11,6 +11,78 @@ from dateutil import parser
 
 # Create your views here.
 
+def listView(request):
+    x = request.GET.get('search')
+
+    if request.GET.get('search') ==None or request.GET.get('search')=='':
+        contacts = Contact.objects.all()
+    else:
+        contacts = []
+        cont_id =[]
+        if(x.isnumeric()):
+            contact_set = Contact.objects.filter(
+                Q(fname__icontains = x) | 
+                Q(mname__icontains = x) |
+                Q(lname__icontains = x)
+            )
+            address_set = Address.objects.filter(
+                
+                Q(address__icontains = x) |
+                Q(address_type__icontains = x) |
+                Q(city__icontains = x) |
+                Q(state__icontains = x) |
+                Q(zipcode__icontains = x) 
+            )
+            phone_set = Phone.objects.filter(
+                # Q(phone_type_icontains = x) |
+                Q(area_code__icontains = int(x)) |
+                Q(number__icontains = int(x)) 
+            )
+            date_set = Date.objects.filter(
+                Q(date_type__icontains = x)|
+                Q(date__regex = x)
+            )
+
+            for cont in contact_set:
+                cont_id.append(cont.id)
+            for adder in address_set:
+                cont_id.append(adder.contact_id)
+            for phon in phone_set:
+                cont_id.append(phon.contact_id)
+            for dat in date_set:
+                cont_id.append(dat.contact_id)
+
+            # print(parser.parse(x))
+            print(contact_set)
+            print(address_set)
+            print(phone_set)
+            # print(date_set)
+
+        else:
+            contact_set = Contact.objects.filter(
+                Q(fname__contains = x) |
+                Q(mname__contains = x) |
+                Q(lname__contains = x)
+            )
+            address_set = Address.objects.filter(
+                Q(address__contains = x) |
+                Q(city__contains = x) |
+                Q(state__contains = x) 
+            )
+            for cont in contact_set:
+                cont_id.append(cont.id)
+            for adder in address_set:
+                cont_id.append(adder.contact_id)
+        print(contact_set)
+        print(address_set)
+
+        cont_id = list(set(cont_id))
+        for cont in cont_id:
+            contacts.append(Contact.objects.get(id=cont))
+    
+    return render(request,"data-list.html",context={'contacts': contacts})
+
+
 
 def show(request):
     cform =Contact.objects.all()
@@ -31,105 +103,7 @@ def show(request):
 
     return render(request, 'show.html', context=context)
     # return render(request, 'data-list.html')
-    
 
-class ContactList(View):
-    
-    template_name = 'data-list.html'
-
-    def get(self, request, *args, **kwargs):
-
-
-        context = {}
-        return render(request, self.template_name, context)
-
-
-@csrf_exempt
-def data_list_table(request):
-    if request.method == 'POST':
-        form = request.POST
-        first_name = form.get('first_name')
-        last_name = form.get('last_name')
-        number = form.get('number')
-        address = form.get('address')
-        date = form.get('date')
-
-        # particular column for datatable list
-        column_dict = {0: 'id', 1: 'first_name', 2: 'middle_name', 3: 'last_name', 4: 'last_name',
-                       5: 'address_type', 6: 'address', 7: 'city', 8: 'state', 9: 'zipcode',
-                       10: 'phone_type', 11: 'area_code', 12: 'number', 13: 'date_type', 14: 'date'}
-
-        filters = Q()
-        if address:
-            
-            filters = filters & Q(addresscontact__address__icontains=address)
-        if first_name:
-            filters = filters & Q(fname__icontains=first_name)
-            # Contact.objects.filter(filter)
-
-        if last_name:
-            filters = filters & Q(lname__icontains=last_name)
-        if number:
-            filters = filters & Q(phonecontact__number__icontains=number)
-        c_form = Contact.objects.all()
-        # if first_name:
-        #     c_form = Contact.objects.filter(Q(addresscontact_icontains=first_name) |
-        #                                 Q(datecontact__icontains=first_name) |
-        #                                 Q(Contact__icontains=first_name) |
-        #                                 Q(phonecontact_icontains=first_name))
-
-        c_form = Contact.objects.filter(filters)
-        print(f" >>>  {c_form}")
-        print(f" >>>  {c_form.query}")
-
-        # a_form = Address.objects.filter(filters)
-        # p_form = Phone.objects.filter(filters)
-        # d_form = Date.objects.filter(filters)
-
-        data_list = [
-            [
-                c.pk,
-                c.fname,
-                c.mname,
-                c.lname,
-                Address.objects.get(contact_id=c.pk).address_type,
-                Address.objects.get(contact_id=c.pk).address,
-                Address.objects.get(contact_id=c.pk).city,
-                Address.objects.get(contact_id=c.pk).state,
-                Address.objects.get(contact_id=c.pk).zipcode,
-                Phone.objects.get(contact_id=c.pk).phone_type,
-                Phone.objects.get(contact_id=c.pk).area_code,
-                Phone.objects.get(contact_id=c.pk).number,
-                Date.objects.get(contact_id=c.pk).date_type,
-                Date.objects.get(contact_id=c.pk).date
-
-            ] for c in c_form
-        ]
-
-        # data_list = [
-        #     [
-        #         c.pk,
-        #         c.fname,
-        #         c.mname,
-        #         c.lname,
-        #         a.address_type,
-        #         a.address,
-        #         a.city,
-        #         a.state,
-        #         a.zipcode,
-        #         p.phone_type,
-        #         p.area_code,
-        #         p.number,
-        #         d.date_type,
-        #         d.date
-        #
-        #     ] for c, a, p, d in zip(c_form, a_form, p_form, d_form)
-        # ]
-
-        context = {
-            'data': data_list
-        }
-        return JsonResponse(context)
 
 
 
@@ -367,7 +341,7 @@ class updateView(View):
                 date = dates[-1]
                 )
 
-        return redirect('/')
+        return redirect('/show')
         
 
 
