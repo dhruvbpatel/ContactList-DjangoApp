@@ -31,7 +31,7 @@ class Address(models.Model):
     address = models.CharField(max_length=500,blank=True, null=True)
     city = models.CharField(max_length=100,blank=True, null=True)
     state = models.CharField(max_length=20,blank=True, null=True)
-    zipcode = models.IntegerField(max_length=5,validators=[MinValueValidator(10000),MaxValueValidator(99999)],null=True,blank=True)
+    zipcode = models.BigIntegerField(max_length=5,validators=[MinValueValidator(10000),MaxValueValidator(99999)],blank=True,null=True)
 
     class Meta:
         db_table = "address"
@@ -48,7 +48,7 @@ class Phone(models.Model):
     ]
     # phone_id = models.AutoField(primary_key=True)
     contact= models.ForeignKey(Contact, on_delete=models.CASCADE, related_name='phonecontact')
-    phone_type = models.CharField(choices=phone_choices,null=True,max_length=20)
+    phone_type = models.CharField(choices=phone_choices,null=True,blank=True,max_length=20)
     area_code = models.BigIntegerField(validators=[MinValueValidator(100),MaxValueValidator(999)],blank=True, null=True)
     number = models.BigIntegerField(validators=[MinValueValidator(1000000),MaxValueValidator(9999999)],blank=True, null=True)
 
@@ -70,7 +70,7 @@ class Date(models.Model):
 
     # date_id = models.AutoField(primary_key=True)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, related_name='datecontact')
-    date_type = models.CharField(choices = date_choices,null=True,max_length=20)
+    date_type = models.CharField(choices = date_choices,null=True,max_length=21)
     date = models.DateField(null=True)   
 
     class Meta:

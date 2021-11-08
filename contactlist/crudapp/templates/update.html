@@ -16,6 +16,24 @@
     <title>Edit Contact</title>
 </head>
 
+
+<nav class="navbar navbar-dark bg-dark justify-content-md-center">
+  
+    
+      <div class="m-20 text-center ">
+        <a href="/">
+          <button type="button" class="btn btn-info">Add New Contact</button>
+        </a>
+        <a href="/search">
+          <button type="button" class="btn btn-info">Search</button>
+        </a>
+    
+      </div>
+  
+
+  
+</nav>
+
 <body>
     <div class="card bg-light mt-10">
         <div class="row justify-content-center container-fluid ">
@@ -57,7 +75,7 @@
                             <option value="home">Home</option>
                             <option value="work">Work</option>
                             <option value="other">Other</option>
-                            {% comment %} <option value="delete">Delete</option> {% endcomment %}
+                            <option value="delete">Delete</option>
                         </select>
                     </div>
 
@@ -120,7 +138,7 @@
                 </div>
                 <div class="my-2 text-center">
                     <button class="btn btn-info" id="address_btn">
-                        Address
+                        Add Address
                     </button>
                 </div>
                 <div id="number_for_loop">
@@ -158,6 +176,7 @@
                                 <option value="home">Home</option>
                                 <option value="work">Work</option>
                                 <option value="other">Other</option>
+                                <option value="delete">Delete</option>
                             </select>
                         </div>
                         <div class="">
@@ -168,14 +187,14 @@
                         <div class="">
                             <label class="form-label">Number</label>
                             <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone"
-                                pattern="[0-9]{10}" value="{{pform.number}}">
+                                pattern="[0-9]{7}" value="{{pform.number}}">
                         </div>
                     </div>
                 </div>
 
                 <div class="my-2 text-center">
                     <div class="my-2 text-center">
-                        <button class="btn btn-info" id="number_btn">Numbers</button>
+                        <button class="btn btn-info" id="number_btn">Add Numbers</button>
                     </div>
 
 

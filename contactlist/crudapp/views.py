@@ -6,7 +6,7 @@ from crudapp.models import *
 from crudapp.forms import ContactForm,AddressForm,PhoneForm,DateForm
 from django.views import View
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
-from dateutil import parser
+
 
 
 # Create your views here.
@@ -21,6 +21,7 @@ def listView(request):
         cont_id =[]
         if(x.isnumeric()):
             contact_set = Contact.objects.filter(
+                Q(id__icontains=x) |
                 Q(fname__icontains = x) | 
                 Q(mname__icontains = x) |
                 Q(lname__icontains = x)
@@ -56,7 +57,7 @@ def listView(request):
             print(contact_set)
             print(address_set)
             print(phone_set)
-            # print(date_set)
+            print(date_set)
 
         else:
             contact_set = Contact.objects.filter(
@@ -294,7 +295,7 @@ class updateView(View):
                 address[i].state = states[i]
                 address[i].zipcode = zipcodes[i]
                 j=i
-                if address_types[i]=='Delete':
+                if address_types[i]=='delete':
                     address[i].delete()
                     continue
                 address[i].save()
@@ -304,23 +305,29 @@ class updateView(View):
             #     address_types[i] = None
             # if numbers[i] == '':
             #     numbers[i] = None
+            flag = False
+            if (address_types[i] =='Select' or address_types[i] =='') and cities[i] =='' and states[i] =='' and zipcodes[i]== '':
+                flag = True
+
             if addresses[i] == '':
                 addresses[i] = None
             if cities[i] == '':
                 cities[i] = None
             if states[i] == '':
                 states[i] = None
-            if zipcodes[i] =='':
-                zipcodes[i] = None
-            
-            Address.objects.create(
-                    contact_id = pk,
-                    address_type = address_types[-1],
-                    address=addresses[-1],
-                    city = cities[-1],
-                    state = states[-1],
-                    zipcode = zipcodes[-1]
-                )
+            if zipcodes[i] == '':
+                zipcodes[i] = 99999
+                
+
+            if flag==False:
+                Address.objects.create(
+                        contact_id = pk,
+                        address_type = address_types[-1],
+                        address=addresses[-1],
+                        city = cities[-1],
+                        state = states[-1],
+                        zipcode = zipcodes[-1]
+                    )
         i=0
         if len(phone)>=len(phone_types):
             for i in range (len(phone)):
@@ -335,7 +342,7 @@ class updateView(View):
                 phone[i].save()
         else:
             if area_codes[i] =='':
-                area_codes[i] = None
+                area_codes[i] = 111
             if numbers[i] == '':
                 numbers[i] = None
             Phone.objects.create(
@@ -417,7 +424,7 @@ class insertView(View):
         n = len(address_type)
         
         for i in range(n):
-            if address_type[i] =='Select' and address[i]=='' and city[i] =='' and state[i] =='' and zipcode[i]== '':
+            if (address_type[i] =='Select' or address_type[i] =='') and address[i]=='' and city[i] =='' and state[i] =='' and zipcode[i]== '':
                 continue
             if address[i] == '':
                 address[i] = None
@@ -426,7 +433,7 @@ class insertView(View):
             if state[i] == '':
                 state[i] = None
             if zipcode[i] == '':
-                zipcode[i] = None
+                zipcode[i] = 10000
 
             Address.objects.create(
             contact = cid,
@@ -466,7 +473,7 @@ class insertView(View):
                 date = date[i]
             )
 
-        return redirect('/show')
+        return redirect('/search')
 
 
 
