@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q,Max
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render,redirect
 from crudapp import forms
@@ -6,6 +6,7 @@ from crudapp.models import *
 from crudapp.forms import ContactForm,AddressForm,PhoneForm,DateForm
 from django.views import View
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from dateutil import parser
 
 
 # Create your views here.
@@ -38,6 +39,7 @@ class ContactList(View):
 
     def get(self, request, *args, **kwargs):
 
+
         context = {}
         return render(request, self.template_name, context)
 
@@ -69,7 +71,7 @@ def data_list_table(request):
             filters = filters & Q(lname__icontains=last_name)
         if number:
             filters = filters & Q(phonecontact__number__icontains=number)
-        # c_form = Contact.objects.all()
+        c_form = Contact.objects.all()
         # if first_name:
         #     c_form = Contact.objects.filter(Q(addresscontact_icontains=first_name) |
         #                                 Q(datecontact__icontains=first_name) |
@@ -129,75 +131,6 @@ def data_list_table(request):
         }
         return JsonResponse(context)
 
-
-# class addView(View):
-
-#     def get(self,request):
-#         # return HttpResponse('yes')
-#         return render(request, 'form.html')
-
-#     def post(self,request):
-#         form = request.POST
-
-#         # contact values
-
-#         fname = form.get('fname')
-#         mname = form.get('mname')
-#         lname = form.get('lname')
-
-#         # address table
-
-#         ad_type = form.get('address_type')
-#         address = form.get('address')
-#         city  = form.get('city')
-#         state = form.get('state')
-#         zipcode = form.get('zipcode')
-
-
-#         #phone table
-
-#         phone_type = form.get('phone_type')
-#         area_code = form.get('area_code')
-#         number = form.get('phone')
-
-
-#         #date table
-
-#         date_type = form.get('date_type')
-#         date = form.get('date')
-
-#         cid = Contact.objects.create(
-#             fname=fname,
-#             mname=mname,
-#             lname=lname,
-#         )
-
-#         # cid = Contact.objects.last()
-
-#         Address.objects.create(
-#             contact = cid,
-#             address_type = ad_type,
-#             address = address,
-#             city = city,
-#             state = state,
-#             zipcode = zipcode,
-#         )
-
-#         Phone.objects.create(
-#             contact = cid,
-#             phone_type = phone_type,
-#             area_code = area_code,
-#             number = number,
-#         )
-
-#         Date.objects.create(
-#             contact = cid,
-#             date_type = date_type,
-#             date = date
-#         ) 
-
-#         # return render(request, 'form.html')
-#         return redirect('/show')
 
 
 class editView(View):
@@ -284,6 +217,160 @@ class editView(View):
 
         return redirect('/show')
 
+class updateView(View):
+    def get(self,request,pk):
+        address = Address.objects.filter(contact=pk)
+        contact = Contact.objects.get(pk=pk)
+        phone = Phone.objects.filter(contact=pk)
+        date = Date.objects.filter(contact=pk)
+
+        context ={
+                'cform':contact,
+                'aform':address,
+                'pform':phone,
+                'dform':date,
+            }
+        
+        return render(request,'update.html',context)
+
+
+    def post(self,request,pk):
+
+        form = request.POST
+
+        address = Address.objects.filter(contact=pk)
+        contact = Contact.objects.get(pk=pk)
+        phone = Phone.objects.filter(contact=pk)
+        date = Date.objects.filter(contact=pk)
+
+        context ={
+                'cform':contact,
+                'aform':address,
+                'pform':phone,
+                'dform':date,
+            }
+        
+        address_id= []
+        phone_id = []
+        date_id = []
+
+        # get all ids of all table
+        for ad in address:
+            address_id.append(ad.id)
+
+        for ph in phone:
+            phone_id.append(ph.id)
+        
+        for d in date:
+            date_id.append(d.id)
+        
+        contact.fname = form.get('fname')
+        contact.mname = form.get('mname')
+        contact.lname = form.get('lname')
+    
+        contact.save()
+
+        address_types = form.getlist('address_type')
+        addresses = form.getlist('address')
+        cities  = form.getlist('city')
+        states = form.getlist('state')
+        zipcodes = form.getlist('zipcode')
+
+        #phone table
+        phone_types = form.getlist('phone_type')
+        area_codes = form.getlist('area_code')
+        numbers = form.getlist('phone')
+
+
+        #date table
+        date_types = form.getlist('date_type')
+        dates = form.getlist('date')
+
+    
+        i,j  = 0,0
+        if len(address)>=len(address_types):
+            for i in range(len(address)):
+                if address_types[i] != '' or address_types != None:
+                    address[i].address_type = address_types[i]
+                address[i].address = addresses[i]
+                address[i].city = cities[i]
+                address[i].state = states[i]
+                address[i].zipcode = zipcodes[i]
+                j=i
+                if address_types[i]=='Delete':
+                    address[i].delete()
+                    continue
+                address[i].save()
+        else:
+            # for j in range(len(address_types)):
+            # if address_types[i] =='':
+            #     address_types[i] = None
+            # if numbers[i] == '':
+            #     numbers[i] = None
+            if addresses[i] == '':
+                addresses[i] = None
+            if cities[i] == '':
+                cities[i] = None
+            if states[i] == '':
+                states[i] = None
+            if zipcodes[i] =='':
+                zipcodes[i] = None
+            
+            Address.objects.create(
+                    contact_id = pk,
+                    address_type = address_types[-1],
+                    address=addresses[-1],
+                    city = cities[-1],
+                    state = states[-1],
+                    zipcode = zipcodes[-1]
+                )
+        i=0
+        if len(phone)>=len(phone_types):
+            for i in range (len(phone)):
+                if phone_types[i] != '' or phone_types != None:
+                    phone[i].phone_type = phone_types[i]
+                phone[i].area_code = area_codes[i]
+                phone[i].number = numbers[i]
+                if phone_types[i] == 'delete':
+                    phone[i].delete()
+                    print("deleted")
+                    continue
+                phone[i].save()
+        else:
+            if area_codes[i] =='':
+                area_codes[i] = None
+            if numbers[i] == '':
+                numbers[i] = None
+            Phone.objects.create(
+                contact_id= pk, 
+                phone_type = phone_types[-1],
+                area_code = area_codes[-1],
+                number = numbers[-1]
+                )
+        i=0
+        if len(date)>=len(date_types):
+            for i in range (len(date)):
+                if date_types[i] != '':
+                    date[i].date_type = date_types[i]
+                if dates[i] != '':
+                    date[i].date = dates[i]
+                if date_types[i] == 'delete':
+                    date[i].delete()
+                    continue
+                date[i].save()
+        else:
+            if dates[i]=='':
+                dates[i]=None
+            Date.objects.create(
+                contact_id = pk,
+                date_type = date_types[-1],
+                date = dates[-1]
+                )
+
+        return redirect('/')
+        
+
+
 
 class insertView(View):
 
@@ -327,9 +414,23 @@ class insertView(View):
             lname=lname,
         )
         # cid = Contact.objects.last().id
+        # cid = Contact.objects.all().aggregate(Max('id'))
+        # cid = cid['id__max']
+        print("cid: ",cid)
         n = len(address_type)
         
         for i in range(n):
+            if address_type[i] =='Select' and address[i]=='' and city[i] =='' and state[i] =='' and zipcode[i]== '':
+                continue
+            if address[i] == '':
+                address[i] = None
+            if city[i] == '':
+                city[i] = None
+            if state[i] == '':
+                state[i] = None
+            if zipcode[i] == '':
+                zipcode[i] = None
+
             Address.objects.create(
             contact = cid,
             address_type = address_type[i],
@@ -342,6 +443,12 @@ class insertView(View):
         n = len(phone_type)
 
         for i in range(n):
+            if phone_type[i] =='Select' and area_code[i]=='' and number=='':
+                continue
+            if area_code[i]=='':
+                area_code[i]=None
+            if number[i]=='':
+                number[i]=None
             Phone.objects.create(
             contact = cid,
             phone_type = phone_type[i],
@@ -352,6 +459,10 @@ class insertView(View):
         n = len(date_type)
 
         for i in range(n):
+            if date_type[i]=='Select' and date[i]=='':
+                continue
+            if date[i]=='':
+                date[i]= None
             Date.objects.create(
                 contact = cid,
                 date_type = date_type[i],

@@ -19,9 +19,9 @@ class Contact(models.Model):
 class Address(models.Model):
 
     address_choice = [
-    ('home', 'Home'),
-    ('work', 'Work'),
-    ('other', 'Other')
+    ('home', 'home'),
+    ('work', 'work'),
+    ('other', 'other')
 
     ]
 
@@ -31,7 +31,7 @@ class Address(models.Model):
     address = models.CharField(max_length=500,blank=True, null=True)
     city = models.CharField(max_length=120,blank=True, null=True)
     state = models.CharField(max_length=20,blank=True, null=True)
-    zipcode = models.IntegerField(max_length=5,validators=[MinValueValidator(10000),MaxValueValidator(99999)])
+    zipcode = models.IntegerField(max_length=5,validators=[MinValueValidator(10000),MaxValueValidator(99999)],null=True,blank=True)
 
     class Meta:
         db_table = "address"
@@ -42,9 +42,9 @@ class Address(models.Model):
 class Phone(models.Model):
 
     phone_choices = [
-    ('home', 'Home'),
-    ('work', 'Work'),
-    ('other', 'Other')
+    ('home', 'home'),
+    ('work', 'work'),
+    ('other', 'other')
     ]
     # phone_id = models.AutoField(primary_key=True)
     contact= models.ForeignKey(Contact, on_delete=models.CASCADE, related_name='phonecontact')
@@ -61,9 +61,9 @@ class Phone(models.Model):
 class Date(models.Model):
 
     date_choices = [
-    ('birthday', 'Birthday'),
-    ('aniversary', 'Aniversary'),
-    ('other', 'Other')
+    ('birthday', 'birthday'),
+    ('aniversary', 'aniversary'),
+    ('other', 'other')
     # ('SR', 'Senior'),
     # ('GR', 'Graduate'),
     ]

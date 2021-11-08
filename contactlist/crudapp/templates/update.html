@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>Edit Contact</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1 style="text-align: center">Create Contact</h1>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+                crossorigin="anonymous"></script>
+
+            <form class="g-3 mb-5 ms-2" style="width: 300px" method="POST">
+                {% csrf_token %}
+                <div id="name_container">
+                    <div class="">
+                        <label class="form-label">First Name</label>
+                        <input type="text" name="fname" maxlength="120" required="" id="id_fname" class="form-control"
+                            value="{{cform.fname}}" />
+                    </div>
+                    <div class="">
+                        <label class="form-label">Middle Name</label>
+                        <input type="text" name="mname" maxlength="120" id="id_mname" class="form-control"
+                            value="{{cform.mname}}" />
+                    </div>
+                    <div class="">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" name="lname" maxlength="120" required="" id="id_lname" class="form-control"
+                            value="{{cform.lname}}" />
+                    </div>
+                </div>
+                <div id="address_for_loop">
+
+                    {% for obj in aform %}
+                    <h5 class="my-2">Add Address Info</h5>
+                    <div class="">
+                        <label class="form-label">Address Type</label>
+                        <select class="form-select" aria-label="Select" name="address_type" id="address_type">
+                            <option value="{{obj.address_type}}" selected> {{obj.address_type}}</option>Select</option>
+                            <option value="home">Home</option>
+                            <option value="work">Work</option>
+                            <option value="other">Other</option>
+                            {% comment %} <option value="delete">Delete</option> {% endcomment %}
+                        </select>
+                    </div>
+
+                    <div class="">
+                        <label class="form-label">Address</label>
+                        <input type="text" name="address" maxlength="120" id="id_street" class="form-control"
+                            value="{{obj.address}}" placeholder="Enter street address" />
+                    </div>
+                    <div class="">
+                        <label class="form-label">City</label>
+                        <input type="text" name="city" maxlength="120" id="id_city" class="form-control"
+                            value="{{obj.city}}" placeholder="Enter city" />
+                    </div>
+                    <div class="">
+                        <label class="form-label">State</label>
+                        <input type="text" name="state" maxlength="120" id="id_state" class="form-control"
+                            value="{{obj.state}}" placeholder="Enter state" />
+                    </div>
+                    <div class="">
+                        <label class="form-label">Zip Code</label>
+                        <input type="number" name="zipcode" maxlength="120" id="zipcode" class="form-control" step="1"
+                            min="10000" max="99999" value="{{obj.zipcode}}" placeholder="Enter zip code" />
+                    </div>
+                    {% endfor %}
+                </div>
+                <div id="address_container" class="d-none">
+                    <div id="address_form">
+                        <h5 class="my-2">Add Address Info</h5>
+                        <div class="">
+                            <label class="form-label">Address Type</label>
+                            <select class="form-select" aria-label="Select" name="address_type" id="address_type">
+                                <option selected disabled value="">Select</option>
+                                <option value="home">Home</option>
+                                <option value="work">Work</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="">
+                            <label class="form-label">address</label>
+                            <input type="text" name="address" maxlength="120" id="address" class="form-control"
+                                placeholder="Enter street address" />
+                        </div>
+                        <div class="">
+                            <label class="form-label">City</label>
+                            <input type="text" name="city" maxlength="120" id="id_city" class="form-control"
+                                placeholder="Enter city" />
+                        </div>
+                        <div class="">
+                            <label class="form-label">State</label>
+                            <input type="text" name="state" maxlength="120" id="id_state" class="form-control"
+                                placeholder="Enter state" />
+                        </div>
+                        <div class="">
+                            <label class="form-label">Zip Code</label>
+                            <input type="number" name="zipcode" maxlength="120" id="zipcode" class="form-control"
+                                step="1" min="10000" max="99999" placeholder="Enter zip code" />
+                        </div>
+                    </div>
+                </div>
+                <div class="my-2 text-center">
+                    <button class="btn btn-primary" id="address_btn">
+                        Add Address
+                    </button>
+                </div>
+                <div id="number_for_loop">
+                    {% for obj in pform %}
+                    <h5 class="my-2">Add Number Info</h5>
+                    <div class="">
+                        <label class="form-label">Phone No. Type</label>
+                        <select class="form-select" aria-label="Select" name="phone_type" id="phone_type">
+                            <option value="{{obj.phone_type}}" selected>{{obj.phone_type}}</option>Select</option>
+                            <option value="home">Home</option>
+                            <option value="work">Work</option>
+                            <option value="other">Other</option>
+                            <option value="delete">Delete</option>
+                        </select>
+                    </div>
+                    <div class="">
+                        <label class="form-label">Area Code</label>
+                        <input type="number" name="area_code" maxlength="120" id="area_code" class="form-control"
+                            step="1" value="{{obj.area_code}}" min="100" max="999" />
+                    </div>
+                    <div class="">
+                        <label class="form-label">Phone</label>
+                        <input type="number" class="form-control" id="phone" name="phone" placeholder="Enter Phone"
+                            pattern="[0-9]{7}" value="{{obj.number}}">
+                    </div>
+                    {% endfor %}
+                </div>
+                <div id="number_container" class="d-none">
+                    <div id="number_form">
+                        <h5 class="my-2">Add Number Info</h5>
+                        <div class="">
+                            <label class="form-label">Phone No. Type</label>
+                            <select class="form-select" aria-label="Select" name="phone_type" id="phone_type">
+                                <option selected disabled value="">Select</option>
+                                <option value="home">Home</option>
+                                <option value="work">Work</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="">
+                            <label class="form-label">Area Code</label>
+                            <input type="number" name="area_code" maxlength="120" id="area_code" class="form-control"
+                                step="1" min="100" max="999" />
+                        </div>
+                        <div class="">
+                            <label class="form-label">Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Phone"
+                                pattern="[0-9]{10}" value="{{pform.number}}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="my-2 text-center">
+                    <div class="my-2 text-center">
+                        <button class="btn btn-primary" id="number_btn">Add Number</button>
+                    </div>
+
+
+                    <div id="date_for_loop">
+                        {% for obj in dform %}
+                        <h5 class="my-2">Add Date Info</h5>
+                        <div class="">
+                            <label class="form-label">Date type</label>
+                            <select class="form-select" aria-label="Default select example" id="date_type"
+                                name="date_type">
+                                <option value="{{obj.date_type}}" selected>{{obj.date_type}}</option>Select</option>
+                                <option value="birthday">Birthdate</option>
+                                <option value="aniversary">Aniversary</option>
+                                <option value="other">Other</option>
+                                <option value="delete">Delete</option>
+                            </select>
+                        </div>
+                        <div class="">
+                            <label class="form-label">Date</label> <br>
+                            <input type="date" class="form-control" id="date" name="date" placeholder="Enter Date"
+                            value="{{dform.date| date:"Y-m-d" }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div id="date_container" class="d-none">
+                        <div id="date_form">
+                            <h5 class="my-2">Add Date Info</h5>
+                            <div class="">
+                                <label class="form-label">Date type</label>
+                                <select class="form-select" aria-label="Default select example" id="date_type"
+                                    name="date_type">
+                                    <option selected disabled value="">Select</option>
+                                    <option value="birthday">Birthdate</option>
+                                    <option value="aniversary">Aniversary</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="">
+                                <label class="form-label">Date</label>
+                                <input type="date" name="date" maxlength="120" id="id_date" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" id="date_btn">Add Date</button>
+                </div>
+                <div class="my-2 text-center">
+                    <button type="submit" class="btn btn-warning">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    $("#address_btn").click(function (e) {
+        e.preventDefault();
+        var classes = $("#address_container").attr("class").split(/\s+/);
+        if (classes[0] == "d-none") {
+            $("#address_container").removeClass("d-none");
+        } else {
+            $("#address_container").append(
+                $("#address_container :nth-child(1)").html()
+            );
+        }
+    });
+    $("#number_btn").click(function (e) {
+        e.preventDefault();
+        var classes = $("#number_container").attr("class").split(/\s+/);
+        if (classes[0] == "d-none") {
+            $("#number_container").removeClass("d-none");
+        } else {
+            $("#number_container").append(
+                $("#number_container :nth-child(1)").html()
+            );
+        }
+    });
+    $("#date_btn").click(function (e) {
+        e.preventDefault();
+        var classes = $("#date_container").attr("class").split(/\s+/);
+        if (classes[0] == "d-none") {
+            $("#date_container").removeClass("d-none");
+        } else {
+            $("#date_container").append(
+                $("#date_container :nth-child(1)").html()
+            );
+        }
+    });
+</script>
+
+</html>
