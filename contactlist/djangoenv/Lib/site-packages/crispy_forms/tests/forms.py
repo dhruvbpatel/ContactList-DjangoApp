@@ -5,15 +5,34 @@ from crispy_forms.helper import FormHelper
 
 
 class SampleForm(forms.Form):
-    is_company = forms.CharField(label="company", required=False, widget=forms.CheckboxInput())
-    email = forms.EmailField(
-        label="email", max_length=30, required=True, widget=forms.TextInput(), help_text="Insert your email"
+    is_company = forms.CharField(
+        label="company", required=False, widget=forms.CheckboxInput()
     )
-    password1 = forms.CharField(label="password", max_length=30, required=True, widget=forms.PasswordInput())
-    password2 = forms.CharField(label="re-enter password", max_length=30, required=True, widget=forms.PasswordInput())
-    first_name = forms.CharField(label="first name", max_length=5, required=True, widget=forms.TextInput())
-    last_name = forms.CharField(label="last name", max_length=5, required=True, widget=forms.TextInput())
-    datetime_field = forms.SplitDateTimeField(label="date time", widget=forms.SplitDateTimeWidget())
+    email = forms.EmailField(
+        label="email",
+        max_length=30,
+        required=True,
+        widget=forms.TextInput(),
+        help_text="Insert your email",
+    )
+    password1 = forms.CharField(
+        label="password", max_length=30, required=True, widget=forms.PasswordInput()
+    )
+    password2 = forms.CharField(
+        label="re-enter password",
+        max_length=30,
+        required=True,
+        widget=forms.PasswordInput(),
+    )
+    first_name = forms.CharField(
+        label="first name", max_length=5, required=True, widget=forms.TextInput()
+    )
+    last_name = forms.CharField(
+        label="last name", max_length=5, required=True, widget=forms.TextInput()
+    )
+    datetime_field = forms.SplitDateTimeField(
+        label="date time", widget=forms.SplitDateTimeWidget()
+    )
 
     def clean(self):
         super().clean()
@@ -39,7 +58,11 @@ class CheckboxesSampleForm(forms.Form):
     )
 
     alphacheckboxes = forms.MultipleChoiceField(
-        choices=(("option_one", "Option one"), ("option_two", "Option two"), ("option_three", "Option three")),
+        choices=(
+            ("option_one", "Option one"),
+            ("option_two", "Option two"),
+            ("option_three", "Option three"),
+        ),
         initial=("option_two", "option_three"),
         widget=forms.CheckboxSelectMultiple,
     )
@@ -62,7 +85,9 @@ class CheckboxesSampleForm(forms.Form):
 
 class SelectSampleForm(forms.Form):
     select = forms.ChoiceField(
-        choices=((1, "Option one"), (2, "Option two"), (3, "Option three")), initial=(1,), widget=forms.Select
+        choices=((1, "Option one"), (2, "Option two"), (3, "Option three")),
+        initial=(1,),
+        widget=forms.Select,
     )
 
 
@@ -101,7 +126,9 @@ class SampleForm5(forms.Form):
         (2, 2),
         (1000, 1000),
     ]
-    checkbox_select_multiple = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices)
+    checkbox_select_multiple = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple, choices=choices
+    )
     radio_select = forms.ChoiceField(widget=forms.RadioSelect, choices=choices)
     pk = forms.IntegerField()
 
@@ -143,8 +170,15 @@ class SampleForm6(forms.ModelForm):
 
 
 class SampleForm7(forms.ModelForm):
-    is_company = forms.CharField(label="company", required=False, widget=forms.CheckboxInput())
-    password2 = forms.CharField(label="re-enter password", max_length=30, required=True, widget=forms.PasswordInput())
+    is_company = forms.CharField(
+        label="company", required=False, widget=forms.CheckboxInput()
+    )
+    password2 = forms.CharField(
+        label="re-enter password",
+        max_length=30,
+        required=True,
+        widget=forms.PasswordInput(),
+    )
 
     class Meta:
         model = CrispyTestModel
@@ -152,8 +186,15 @@ class SampleForm7(forms.ModelForm):
 
 
 class SampleForm8(forms.ModelForm):
-    is_company = forms.CharField(label="company", required=False, widget=forms.CheckboxInput())
-    password2 = forms.CharField(label="re-enter password", max_length=30, required=True, widget=forms.PasswordInput())
+    is_company = forms.CharField(
+        label="company", required=False, widget=forms.CheckboxInput()
+    )
+    password2 = forms.CharField(
+        label="re-enter password",
+        max_length=30,
+        required=True,
+        widget=forms.PasswordInput(),
+    )
 
     class Meta:
         model = CrispyTestModel
@@ -174,13 +215,19 @@ class FakeFieldFile:
 
 class FileForm(forms.Form):
     file_field = forms.FileField(widget=forms.FileInput)
-    clearable_file = forms.FileField(widget=forms.ClearableFileInput, required=False, initial=FakeFieldFile())
+    clearable_file = forms.FileField(
+        widget=forms.ClearableFileInput, required=False, initial=FakeFieldFile()
+    )
 
 
 class AdvancedFileForm(forms.Form):
-    file_field = forms.FileField(widget=forms.FileInput(attrs={"class": "my-custom-class"}))
+    file_field = forms.FileField(
+        widget=forms.FileInput(attrs={"class": "my-custom-class"})
+    )
     clearable_file = forms.FileField(
-        widget=forms.ClearableFileInput(attrs={"class": "my-custom-class"}), required=False, initial=FakeFieldFile()
+        widget=forms.ClearableFileInput(attrs={"class": "my-custom-class"}),
+        required=False,
+        initial=FakeFieldFile(),
     )
 
 
@@ -202,7 +249,9 @@ class GroupedChoiceForm(forms.Form):
         ),
         ("unknown", "Unknown"),
     ]
-    checkbox_select_multiple = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=choices)
+    checkbox_select_multiple = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple, choices=choices
+    )
     radio = forms.MultipleChoiceField(widget=forms.RadioSelect, choices=choices)
 
 

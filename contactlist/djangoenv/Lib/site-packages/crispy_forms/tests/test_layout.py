@@ -10,7 +10,17 @@ from django.utils.translation import gettext_lazy as _
 
 from crispy_forms.bootstrap import Field, InlineCheckboxes
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import HTML, ButtonHolder, Column, Div, Fieldset, Layout, MultiField, Row, Submit
+from crispy_forms.layout import (
+    HTML,
+    ButtonHolder,
+    Column,
+    Div,
+    Fieldset,
+    Layout,
+    MultiField,
+    Row,
+    Submit,
+)
 from crispy_forms.utils import render_crispy_form
 
 from .conftest import only_bootstrap, only_bootstrap3, only_bootstrap4, only_uni_form
@@ -177,7 +187,14 @@ def test_layout_fieldset_row_html_with_unicode_fieldnames(settings):
         {% crispy form form_helper %}
     """
     )
-    c = Context({"form": SampleForm(), "form_helper": form_helper, "flag": True, "message": "Hello!"})
+    c = Context(
+        {
+            "form": SampleForm(),
+            "form_helper": form_helper,
+            "flag": True,
+            "message": "Hello!",
+        }
+    )
     html = template.render(c)
 
     assert 'id="fieldset_company_data"' in html
@@ -315,18 +332,26 @@ def test_formset_layout(settings):
         Fieldset("", "first_name", "last_name"),
     )
 
-    html = render_crispy_form(form=formset, helper=helper, context={"csrf_token": _get_new_csrf_string()})
+    html = render_crispy_form(
+        form=formset, helper=helper, context={"csrf_token": _get_new_csrf_string()}
+    )
 
     # Check formset fields
-    assert contains_partial(html, '<input id="id_form-TOTAL_FORMS" name="form-TOTAL_FORMS" type="hidden" value="3"/>')
     assert contains_partial(
-        html, '<input id="id_form-INITIAL_FORMS" name="form-INITIAL_FORMS" type="hidden" value="0"/>'
+        html,
+        '<input id="id_form-TOTAL_FORMS" name="form-TOTAL_FORMS" type="hidden" value="3"/>',
     )
     assert contains_partial(
-        html, '<input id="id_form-MAX_NUM_FORMS" name="form-MAX_NUM_FORMS" type="hidden" value="1000"/>'
+        html,
+        '<input id="id_form-INITIAL_FORMS" name="form-INITIAL_FORMS" type="hidden" value="0"/>',
     )
     assert contains_partial(
-        html, '<input id="id_form-MIN_NUM_FORMS" name="form-MIN_NUM_FORMS" type="hidden" value="0"/>'
+        html,
+        '<input id="id_form-MAX_NUM_FORMS" name="form-MAX_NUM_FORMS" type="hidden" value="1000"/>',
+    )
+    assert contains_partial(
+        html,
+        '<input id="id_form-MIN_NUM_FORMS" name="form-MIN_NUM_FORMS" type="hidden" value="0"/>',
     )
     assert html.count("hidden") == 5
 
@@ -353,7 +378,9 @@ def test_formset_layout(settings):
 
 
 def test_modelformset_layout():
-    CrispyModelFormSet = modelformset_factory(CrispyTestModel, form=SampleForm4, extra=3)
+    CrispyModelFormSet = modelformset_factory(
+        CrispyTestModel, form=SampleForm4, extra=3
+    )
     formset = CrispyModelFormSet(queryset=CrispyTestModel.objects.none())
     helper = FormHelper()
     helper.layout = Layout("email")
@@ -364,12 +391,17 @@ def test_modelformset_layout():
     assert html.count("id_form-1-id") == 1
     assert html.count("id_form-2-id") == 1
 
-    assert contains_partial(html, '<input id="id_form-TOTAL_FORMS" name="form-TOTAL_FORMS" type="hidden" value="3"/>')
     assert contains_partial(
-        html, '<input id="id_form-INITIAL_FORMS" name="form-INITIAL_FORMS" type="hidden" value="0"/>'
+        html,
+        '<input id="id_form-TOTAL_FORMS" name="form-TOTAL_FORMS" type="hidden" value="3"/>',
     )
     assert contains_partial(
-        html, '<input id="id_form-MAX_NUM_FORMS" name="form-MAX_NUM_FORMS" type="hidden" value="1000"/>'
+        html,
+        '<input id="id_form-INITIAL_FORMS" name="form-INITIAL_FORMS" type="hidden" value="0"/>',
+    )
+    assert contains_partial(
+        html,
+        '<input id="id_form-MAX_NUM_FORMS" name="form-MAX_NUM_FORMS" type="hidden" value="1000"/>',
     )
 
     assert html.count('name="form-0-email"') == 1
@@ -435,7 +467,9 @@ def test_specialspaceless_not_screwing_intended_spaces():
     test_form = SampleForm()
     test_form.fields["email"].widget = forms.Textarea()
     test_form.helper = FormHelper()
-    test_form.helper.layout = Layout("email", HTML("<span>first span</span> <span>second span</span>"))
+    test_form.helper.layout = Layout(
+        "email", HTML("<span>first span</span> <span>second span</span>")
+    )
     html = render_crispy_form(test_form)
     assert "<span>first span</span> <span>second span</span>" in html
 
@@ -523,11 +557,21 @@ def test_second_layout_multifield_column_buttonholder_submit_div():
             ),
             ButtonHolder(
                 Submit(
-                    "Save the world", "{{ value_var }}", css_class="button white", data_id="test", data_name="test"
+                    "Save the world",
+                    "{{ value_var }}",
+                    css_class="button white",
+                    data_id="test",
+                    data_name="test",
                 ),
                 Submit("store", "Store results"),
             ),
-            Div("password1", "password2", css_id="custom-div", css_class="customdivs", test_markup="123"),
+            Div(
+                "password1",
+                "password2",
+                css_id="custom-div",
+                css_class="customdivs",
+                test_markup="123",
+            ),
         )
     )
 
@@ -568,10 +612,14 @@ def test_keepcontext_context_manager(settings):
     form = CheckboxesSampleForm()
     form.helper = FormHelper()
     # We use here InlineCheckboxes as it updates context in an unsafe way
-    form.helper.layout = Layout("checkboxes", InlineCheckboxes("alphacheckboxes"), "numeric_multiple_checkboxes")
+    form.helper.layout = Layout(
+        "checkboxes", InlineCheckboxes("alphacheckboxes"), "numeric_multiple_checkboxes"
+    )
     context = {"form": form}
 
-    response = render(request=None, template_name="crispy_render_template.html", context=context)
+    response = render(
+        request=None, template_name="crispy_render_template.html", context=context
+    )
 
     if settings.CRISPY_TEMPLATE_PACK == "bootstrap":
         assert response.content.count(b"checkbox inline") == 3
@@ -730,17 +778,25 @@ def test_file_field():
     form = FileForm()
     form.helper = FormHelper()
     form.helper.layout = Layout("clearable_file")
-    assert parse_form(form) == parse_expected("bootstrap4/test_layout/test_file_field_clearable_custom_control.html")
+    assert parse_form(form) == parse_expected(
+        "bootstrap4/test_layout/test_file_field_clearable_custom_control.html"
+    )
 
     form.helper.use_custom_control = False
-    assert parse_form(form) == parse_expected("bootstrap4/test_layout/test_file_field_clearable.html")
+    assert parse_form(form) == parse_expected(
+        "bootstrap4/test_layout/test_file_field_clearable.html"
+    )
 
     form.helper.use_custom_control = True
     form.helper.layout = Layout("file_field")
-    assert parse_form(form) == parse_expected("bootstrap4/test_layout/test_file_field_custom_control.html")
+    assert parse_form(form) == parse_expected(
+        "bootstrap4/test_layout/test_file_field_custom_control.html"
+    )
 
     form.helper.use_custom_control = False
-    assert parse_form(form) == parse_expected("bootstrap4/test_layout/test_file_field_default.html")
+    assert parse_form(form) == parse_expected(
+        "bootstrap4/test_layout/test_file_field_default.html"
+    )
 
 
 @only_bootstrap4
@@ -753,4 +809,6 @@ def test_file_field_with_custom_class():
     )
 
     form.helper.layout = Layout("file_field")
-    assert parse_form(form) == parse_expected("bootstrap4/test_layout/test_file_field_with_custom_class.html")
+    assert parse_form(form) == parse_expected(
+        "bootstrap4/test_layout/test_file_field_with_custom_class.html"
+    )

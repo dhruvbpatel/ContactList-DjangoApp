@@ -11,7 +11,15 @@ from .utils import TEMPLATE_PACK, flatatt, render_field
 class PrependedAppendedText(Field):
     template = "%s/layout/prepended_appended_text.html"
 
-    def __init__(self, field, prepended_text=None, appended_text=None, input_size=None, *args, **kwargs):
+    def __init__(
+        self,
+        field,
+        prepended_text=None,
+        appended_text=None,
+        input_size=None,
+        *args,
+        **kwargs
+    ):
         self.field = field
         self.appended_text = appended_text
         self.prepended_text = prepended_text
@@ -29,7 +37,15 @@ class PrependedAppendedText(Field):
 
         super().__init__(field, *args, **kwargs)
 
-    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, extra_context=None, **kwargs):
+    def render(
+        self,
+        form,
+        form_style,
+        context,
+        template_pack=TEMPLATE_PACK,
+        extra_context=None,
+        **kwargs
+    ):
         extra_context = extra_context.copy() if extra_context is not None else {}
         extra_context.update(
             {
@@ -93,7 +109,9 @@ class FormActions(LayoutObject):
             self.attrs["class"] = self.attrs.pop("css_class")
 
     def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
-        html = self.get_rendered_fields(form, form_style, context, template_pack, **kwargs)
+        html = self.get_rendered_fields(
+            form, form_style, context, template_pack, **kwargs
+        )
         template = self.get_template_name(template_pack)
         context.update({"formactions": self, "fields_output": html})
 
@@ -114,7 +132,11 @@ class InlineCheckboxes(Field):
 
     def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         return super().render(
-            form, form_style, context, template_pack=template_pack, extra_context={"inline_class": "inline"}
+            form,
+            form_style,
+            context,
+            template_pack=template_pack,
+            extra_context={"inline_class": "inline"},
         )
 
 
@@ -129,7 +151,11 @@ class InlineRadios(Field):
 
     def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         return super().render(
-            form, form_style, context, template_pack=template_pack, extra_context={"inline_class": "inline"}
+            form,
+            form_style,
+            context,
+            template_pack=template_pack,
+            extra_context={"inline_class": "inline"},
         )
 
 
@@ -137,7 +163,15 @@ class FieldWithButtons(Div):
     template = "%s/layout/field_with_buttons.html"
     field_template = "%s/field.html"
 
-    def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, extra_context=None, **kwargs):
+    def render(
+        self,
+        form,
+        form_style,
+        context,
+        template_pack=TEMPLATE_PACK,
+        extra_context=None,
+        **kwargs
+    ):
         # We first render the buttons
         field_template = self.field_template % template_pack
         buttons = "".join(
@@ -173,7 +207,13 @@ class FieldWithButtons(Div):
             )
         else:
             return render_field(
-                self.fields[0], form, form_style, context, template, extra_context=extra_context, **kwargs
+                self.fields[0],
+                form,
+                form_style,
+                context,
+                template,
+                extra_context=extra_context,
+                **kwargs,
             )
 
 
@@ -363,7 +403,9 @@ class Accordion(ContainerHolder):
 
         for group in self.fields:
             group.data_parent = self.css_id
-            content += render_field(group, form, form_style, context, template_pack=template_pack, **kwargs)
+            content += render_field(
+                group, form, form_style, context, template_pack=template_pack, **kwargs
+            )
 
         template = self.get_template_name(template_pack)
         context.update({"accordion": self, "content": content})
@@ -392,7 +434,9 @@ class Alert(Div):
 
     def render(self, form, form_style, context, template_pack=TEMPLATE_PACK, **kwargs):
         template = self.get_template_name(template_pack)
-        context.update({"alert": self, "content": self.content, "dismiss": self.dismiss})
+        context.update(
+            {"alert": self, "content": self.content, "dismiss": self.dismiss}
+        )
 
         return render_to_string(template, context.flatten())
 

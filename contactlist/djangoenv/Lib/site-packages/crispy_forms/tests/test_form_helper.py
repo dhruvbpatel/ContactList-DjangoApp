@@ -11,14 +11,26 @@ from django.test.html import parse_html
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from crispy_forms.bootstrap import AppendedText, FieldWithButtons, PrependedAppendedText, PrependedText, StrictButton
+from crispy_forms.bootstrap import (
+    AppendedText,
+    FieldWithButtons,
+    PrependedAppendedText,
+    PrependedText,
+    StrictButton,
+)
 from crispy_forms.helper import FormHelper, FormHelpersException
 from crispy_forms.layout import Button, Field, Hidden, Layout, MultiField, Reset, Submit
 from crispy_forms.templatetags.crispy_forms_tags import CrispyFormNode
 from crispy_forms.utils import render_crispy_form
 
 from .conftest import only_bootstrap, only_bootstrap3, only_bootstrap4, only_uni_form
-from .forms import SampleForm, SampleForm7, SampleForm8, SampleFormWithMedia, SampleFormWithMultiValueField
+from .forms import (
+    SampleForm,
+    SampleForm7,
+    SampleForm8,
+    SampleFormWithMedia,
+    SampleFormWithMultiValueField,
+)
 
 
 def test_inputs(settings):
@@ -387,7 +399,13 @@ def test_formset_with_helper_without_layout(settings):
     SampleFormSet = formset_factory(SampleForm, extra=3)
     testFormSet = SampleFormSet()
 
-    c = Context({"testFormSet": testFormSet, "formset_helper": form_helper, "csrf_token": _get_new_csrf_string()})
+    c = Context(
+        {
+            "testFormSet": testFormSet,
+            "formset_helper": form_helper,
+            "csrf_token": _get_new_csrf_string(),
+        }
+    )
     html = template.render(c)
 
     assert html.count("<form") == 1
@@ -418,7 +436,13 @@ def test_CSRF_token_POST_form():
     # The middleware only initializes the CSRF token when processing a real request
     # So using RequestContext or csrf(request) here does not work.
     # Instead I set the key `csrf_token` to a CSRF token manually, which `csrf_token` tag uses
-    c = Context({"form": SampleForm(), "form_helper": form_helper, "csrf_token": _get_new_csrf_string()})
+    c = Context(
+        {
+            "form": SampleForm(),
+            "form_helper": form_helper,
+            "csrf_token": _get_new_csrf_string(),
+        }
+    )
     html = template.render(c)
 
     assert "csrfmiddlewaretoken" in html
@@ -434,7 +458,13 @@ def test_CSRF_token_GET_form():
     """
     )
 
-    c = Context({"form": SampleForm(), "form_helper": form_helper, "csrf_token": _get_new_csrf_string()})
+    c = Context(
+        {
+            "form": SampleForm(),
+            "form_helper": form_helper,
+            "csrf_token": _get_new_csrf_string(),
+        }
+    )
     html = template.render(c)
 
     assert "csrfmiddlewaretoken" not in html
@@ -695,7 +725,9 @@ def test_error_text_inline(settings):
         help_class = "invalid-feedback"
         help_tag_name = "div"
 
-    matches = re.findall(r'<span id="error_\d_\w*" class="%s"' % help_class, html, re.MULTILINE)
+    matches = re.findall(
+        r'<span id="error_\d_\w*" class="%s"' % help_class, html, re.MULTILINE
+    )
     assert len(matches) == 3
 
     form = SampleForm({"email": "invalidemail"})
@@ -710,7 +742,11 @@ def test_error_text_inline(settings):
         help_class = "invalid-feedback"
         help_tag_name = "p"
 
-    matches = re.findall(r'<{} id="error_\d_\w*" class="{}"'.format(help_tag_name, help_class), html, re.MULTILINE)
+    matches = re.findall(
+        r'<{} id="error_\d_\w*" class="{}"'.format(help_tag_name, help_class),
+        html,
+        re.MULTILINE,
+    )
     assert len(matches) == 3
 
 
@@ -876,7 +912,10 @@ def test_label_class_and_field_class_bs4_offset_when_horizontal():
     html = render_crispy_form(form)
 
     assert '<div class="form-group row">' in html
-    assert '<div class="offset-sm-3 offset-md-4 offset-5 offset-lg-4 col-sm-8 col-md-6 col-7 col-lg-8">' in html
+    assert (
+        '<div class="offset-sm-3 offset-md-4 offset-5 offset-lg-4 col-sm-8 col-md-6 col-7 col-lg-8">'
+        in html
+    )
     assert html.count("col-sm-8") == 7
     assert html.count("col-md-6") == 7
     assert html.count("col-7") == 7

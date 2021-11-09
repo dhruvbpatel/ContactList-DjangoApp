@@ -153,7 +153,11 @@ def test_get_layout_objects():
 
     layout_2 = Layout(Div(Div(Div("email")), Div("password1"), "password2"))
     assert layout_2.get_layout_objects(Div) == [[[0], "div"]]
-    assert layout_2.get_layout_objects(Div, max_level=1) == [[[0], "div"], [[0, 0], "div"], [[0, 1], "div"]]
+    assert layout_2.get_layout_objects(Div, max_level=1) == [
+        [[0], "div"],
+        [[0, 0], "div"],
+        [[0, 1], "div"],
+    ]
     assert layout_2.get_layout_objects(Div, max_level=2) == [
         [[0], "div"],
         [[0, 0], "div"],
@@ -166,7 +170,11 @@ def test_get_layout_objects():
         Div("password1"),
         "password2",
     )
-    assert layout_3.get_layout_objects(str, max_level=2) == [[[0], "email"], [[1, 0], "password1"], [[2], "password2"]]
+    assert layout_3.get_layout_objects(str, max_level=2) == [
+        [[0], "email"],
+        [[1, 0], "password1"],
+        [[2], "password2"],
+    ]
 
     layout_4 = Layout(
         Div(
@@ -177,7 +185,11 @@ def test_get_layout_objects():
         "extra_field",
     )
     assert layout_4.get_layout_objects(Div) == [[[0], "div"], [[1], "div"]]
-    assert layout_4.get_layout_objects(Div, max_level=1) == [[[0], "div"], [[0, 0], "div"], [[1], "div"]]
+    assert layout_4.get_layout_objects(Div, max_level=1) == [
+        [[0], "div"],
+        [[0, 0], "div"],
+        [[1], "div"],
+    ]
 
 
 def test_filter_and_wrap():
@@ -405,5 +417,9 @@ def test_filter():
         "extra_field",
     )
     assert helper.filter(Div, MultiField).slice == [[[0], "div"], [[1], "div"]]
-    assert helper.filter(Div, MultiField, max_level=1).slice == [[[0], "div"], [[0, 0], "multifield"], [[1], "div"]]
+    assert helper.filter(Div, MultiField, max_level=1).slice == [
+        [[0], "div"],
+        [[0, 0], "multifield"],
+        [[1], "div"],
+    ]
     assert helper.filter(MultiField, max_level=1).slice == [[[0, 0], "multifield"]]

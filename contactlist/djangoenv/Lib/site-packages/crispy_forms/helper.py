@@ -17,7 +17,9 @@ class DynamicLayoutHandler:
     def _check_layout_and_form(self):
         self._check_layout()
         if self.form is None:
-            raise FormHelpersException("You need to pass a form instance to your FormHelper")
+            raise FormHelpersException(
+                "You need to pass a form instance to your FormHelper"
+            )
 
     def all(self):
         """
@@ -33,7 +35,9 @@ class DynamicLayoutHandler:
         self._check_layout()
         max_level = kwargs.pop("max_level", 0)
         greedy = kwargs.pop("greedy", False)
-        filtered_layout_objects = self.layout.get_layout_objects(LayoutClasses, max_level=max_level, greedy=greedy)
+        filtered_layout_objects = self.layout.get_layout_objects(
+            LayoutClasses, max_level=max_level, greedy=greedy
+        )
 
         return LayoutSlice(self.layout, filtered_layout_objects)
 
@@ -298,19 +302,37 @@ class FormHelper(DynamicLayoutHandler):
         form.crispy_field_template = self.field_template
 
         # This renders the specified Layout strictly
-        html = self.layout.render(form, self.form_style, context, template_pack=template_pack)
+        html = self.layout.render(
+            form, self.form_style, context, template_pack=template_pack
+        )
 
         # Rendering some extra fields if specified
-        if self.render_unmentioned_fields or self.render_hidden_fields or self.render_required_fields:
+        if (
+            self.render_unmentioned_fields
+            or self.render_hidden_fields
+            or self.render_required_fields
+        ):
             fields = tuple(form.fields.keys())
             left_fields_to_render = list_difference(fields, form.rendered_fields)
             for field in left_fields_to_render:
                 if (
                     self.render_unmentioned_fields
-                    or (self.render_hidden_fields and form.fields[field].widget.is_hidden)
-                    or (self.render_required_fields and form.fields[field].widget.is_required)
+                    or (
+                        self.render_hidden_fields
+                        and form.fields[field].widget.is_hidden
+                    )
+                    or (
+                        self.render_required_fields
+                        and form.fields[field].widget.is_required
+                    )
                 ):
-                    html += render_field(field, form, self.form_style, context, template_pack=template_pack)
+                    html += render_field(
+                        field,
+                        form,
+                        self.form_style,
+                        context,
+                        template_pack=template_pack,
+                    )
 
         return mark_safe(html)
 
@@ -337,17 +359,23 @@ class FormHelper(DynamicLayoutHandler):
 
         if template_pack == "bootstrap4":
             if "form-horizontal" in self.form_class.split():
-                bootstrap_size_match = re.findall(r"col(-(xl|lg|md|sm))?-(\d+)", self.label_class)
+                bootstrap_size_match = re.findall(
+                    r"col(-(xl|lg|md|sm))?-(\d+)", self.label_class
+                )
                 if bootstrap_size_match:
                     offset_pattern = "offset%s-%s"
                     items["bootstrap_checkbox_offsets"] = [
                         offset_pattern % (m[0], m[-1]) for m in bootstrap_size_match
                     ]
         else:
-            bootstrap_size_match = re.findall(r"col-(lg|md|sm|xs)-(\d+)", self.label_class)
+            bootstrap_size_match = re.findall(
+                r"col-(lg|md|sm|xs)-(\d+)", self.label_class
+            )
             if bootstrap_size_match:
                 offset_pattern = "col-%s-offset-%s"
-                items["bootstrap_checkbox_offsets"] = [offset_pattern % m for m in bootstrap_size_match]
+                items["bootstrap_checkbox_offsets"] = [
+                    offset_pattern % m for m in bootstrap_size_match
+                ]
 
         items["attrs"] = {}
         if self.attrs:

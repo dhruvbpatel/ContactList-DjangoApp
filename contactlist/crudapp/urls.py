@@ -18,13 +18,11 @@ from django.urls import path
 from crudapp import views
 
 urlpatterns = [
-    path('', views.insertView.as_view(), name='addview'),
-    path('search/', views.listView, name="contact_list"),
+    path("", views.insertView.as_view(), name="addview"),
+    path("search/", views.listView, name="contact_list"),
     # path('edit/<int:pk>/', views.editView.as_view(), name='editView'),
-    path('edit/<int:pk>/', views.updateView.as_view(), name='editView'),
-
-    path('delete/<int:pk>/', views.deleteView.as_view(), name='deleteView'),
+    path("edit/<int:pk>/", views.updateView.as_view(), name="editView"),
+    path("delete/<int:pk>/", views.deleteView.as_view(), name="deleteView"),
     # path('data-table/', views.data_list_table, name="showData"),
-    path('show/',views.show),
-
+    path("show/", views.show),
 ]

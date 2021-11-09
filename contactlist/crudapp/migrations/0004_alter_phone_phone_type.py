@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('crudapp', '0003_alter_address_zipcode'),
+        ("crudapp", "0003_alter_address_zipcode"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='phone',
-            name='phone_type',
-            field=models.CharField(blank=True, choices=[('home', 'home'), ('work', 'work'), ('other', 'other')], max_length=20, null=True),
+            model_name="phone",
+            name="phone_type",
+            field=models.CharField(
+                blank=True,
+                choices=[("home", "home"), ("work", "work"), ("other", "other")],
+                max_length=20,
+                null=True,
+            ),
         ),
     ]

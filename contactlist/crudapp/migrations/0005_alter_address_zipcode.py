@@ -7,13 +7,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('crudapp', '0004_alter_phone_phone_type'),
+        ("crudapp", "0004_alter_phone_phone_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='address',
-            name='zipcode',
-            field=models.BigIntegerField(blank=True, default=75080, max_length=5, null=True, validators=[django.core.validators.MinValueValidator(10000), django.core.validators.MaxValueValidator(99999)]),
+            model_name="address",
+            name="zipcode",
+            field=models.BigIntegerField(
+                blank=True,
+                default=75080,
+                max_length=5,
+                null=True,
+                validators=[
+                    django.core.validators.MinValueValidator(10000),
+                    django.core.validators.MaxValueValidator(99999),
+                ],
+            ),
         ),
     ]

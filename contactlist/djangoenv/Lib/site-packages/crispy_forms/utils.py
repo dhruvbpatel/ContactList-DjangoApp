@@ -70,7 +70,9 @@ def render_field(  # noqa: C901
             bound_field = form[field]
             field_instance = bound_field.field
             if attrs is not None:
-                widgets = getattr(field_instance.widget, "widgets", [field_instance.widget])
+                widgets = getattr(
+                    field_instance.widget, "widgets", [field_instance.widget]
+                )
 
                 # We use attrs as a dictionary later, so here we make a copy
                 list_attrs = attrs
@@ -80,7 +82,9 @@ def render_field(  # noqa: C901
                 for index, (widget, attr) in enumerate(zip(widgets, list_attrs)):
                     if hasattr(field_instance.widget, "widgets"):
                         if "type" in attr and attr["type"] == "hidden":
-                            field_instance.widget.widgets[index] = field_instance.hidden_widget(attr)
+                            field_instance.widget.widgets[
+                                index
+                            ] = field_instance.hidden_widget(attr)
 
                         else:
                             field_instance.widget.widgets[index].attrs.update(attr)
@@ -96,7 +100,10 @@ def render_field(  # noqa: C901
                 raise Exception("Could not resolve form field '%s'." % field)
             else:
                 field_instance = None
-                logging.warning("Could not resolve form field '%s'." % field, exc_info=sys.exc_info())
+                logging.warning(
+                    "Could not resolve form field '%s'." % field,
+                    exc_info=sys.exc_info(),
+                )
 
         if hasattr(form, "rendered_fields"):
             if field not in form.rendered_fields:
@@ -105,7 +112,10 @@ def render_field(  # noqa: C901
                 if not FAIL_SILENTLY:
                     raise Exception("A field should only be rendered once: %s" % field)
                 else:
-                    logging.warning("A field should only be rendered once: %s" % field, exc_info=sys.exc_info())
+                    logging.warning(
+                        "A field should only be rendered once: %s" % field,
+                        exc_info=sys.exc_info(),
+                    )
 
         if field_instance is None:
             html = ""
@@ -120,7 +130,9 @@ def render_field(  # noqa: C901
 
             # We save the Layout object's bound fields in the layout object's `bound_fields` list
             if layout_object is not None:
-                if hasattr(layout_object, "bound_fields") and isinstance(layout_object.bound_fields, list):
+                if hasattr(layout_object, "bound_fields") and isinstance(
+                    layout_object.bound_fields, list
+                ):
                     layout_object.bound_fields.append(bound_field)
                 else:
                     layout_object.bound_fields = [bound_field]

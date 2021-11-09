@@ -223,14 +223,26 @@ def test_crispy_addon(settings):
         assert "input-prepend" not in crispy_addon(bound_field, append="Primary")
         assert "input-append" in crispy_addon(bound_field, append="Secondary")
         # prepend and append tests
-        assert "input-append" in crispy_addon(bound_field, prepend="Work", append="Primary")
-        assert "input-prepend" in crispy_addon(bound_field, prepend="Work", append="Secondary")
+        assert "input-append" in crispy_addon(
+            bound_field, prepend="Work", append="Primary"
+        )
+        assert "input-prepend" in crispy_addon(
+            bound_field, prepend="Work", append="Secondary"
+        )
     elif settings.CRISPY_TEMPLATE_PACK == "bootstrap3":
-        assert "input-group-addon" in crispy_addon(bound_field, prepend="Work", append="Primary")
-        assert "input-group-addon" in crispy_addon(bound_field, prepend="Work", append="Secondary")
+        assert "input-group-addon" in crispy_addon(
+            bound_field, prepend="Work", append="Primary"
+        )
+        assert "input-group-addon" in crispy_addon(
+            bound_field, prepend="Work", append="Secondary"
+        )
     elif settings.CRISPY_TEMPLATE_PACK == "bootstrap4":
-        assert "input-group-text" in crispy_addon(bound_field, prepend="Work", append="Primary")
-        assert "input-group-text" in crispy_addon(bound_field, prepend="Work", append="Secondary")
+        assert "input-group-text" in crispy_addon(
+            bound_field, prepend="Work", append="Primary"
+        )
+        assert "input-group-text" in crispy_addon(
+            bound_field, prepend="Work", append="Secondary"
+        )
 
     # errors
     with pytest.raises(TypeError):

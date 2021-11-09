@@ -24,81 +24,82 @@
 
 <body>
 
-<nav class="navbar navbar-dark bg-dark justify-content-md-center">
-  
-    
-      <div class="m-20 text-center ">
-        <a href="/">
-          <button type="button" class="btn btn-info">Add New Contact</button>
-        </a>
-        <a href="/search">
-          <button type="button" class="btn btn-info">Refresh</button>
-        </a>
-    
-      </div>
-  
+    <nav class="navbar navbar-dark bg-dark justify-content-md-center">
 
-  
-</nav>
-  
-  <form action="" method="GET">
-    <div class="input-group mb-3 w-50 mx-auto p-3 ">
-        <input type="search" class="form-control" name="search" placeholder="Search Here" >
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="submit" >Search</button>
+
+        <div class="m-20 text-center ">
+            <a href="/">
+                <button type="button" class="btn btn-info">Add New Contact</button>
+            </a>
+            <a href="/search">
+                <button type="button" class="btn btn-info">Refresh</button>
+            </a>
+
         </div>
-      </div>
+
+
+
+    </nav>
+
+    <form action="" method="GET">
+        <div class="input-group mb-3 w-50 mx-auto p-3 ">
+            <input type="search" class="form-control" name="search" placeholder="Search Here">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </div>
     </form>
 
     <center><small> This search query produced : {{ contacts|length }} results</small></center>
-   
+
     <body>
-<div class="container">  
-    {% comment %} <h2>Contact List</h2> {% endcomment %}
-    <table class="table table-striped table-bordered table-lm">
-    <thead class="thead-dark">  
-    <tr>    
-        <th>Id</th>
-        <th>First Name</th>  
-        <th>Middle Name</th>  
-        <th>Last Name</th> 
-        <th>Actions</th>
-    </tr>  
-    </thead>  
-    <tbody>  
-{% for contact in contacts %}
-    <tr>  
-        <td>{{contact.id}}</td>
-        <td>{{ contact.fname }}</td>  
-        <td>{{ contact.mname }}</td>  
-        <td>{{ contact.lname }}</td> 
-        
-        <td >  
+        <div class="container">
+            {% comment %} <h2>Contact List</h2> {% endcomment %}
+            <table class="table table-striped table-bordered table-lm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contacts %}
+                    <tr>
+                        <td>{{contact.id}}</td>
+                        <td>{{ contact.fname }}</td>
+                        <td>{{ contact.mname }}</td>
+                        <td>{{ contact.lname }}</td>
 
-            {% comment %} <a href="/profile/{{contact.contact_id}}">Profile</a> {% endcomment %}
-            {% comment %} <a href="/edit/{{contact.id}}"><span class="glyphicon glyphicon-pencil" >Edit</span></a>  
-            <a href="/delete/{{ contact.id }}">Delete</a>   {% endcomment %}
-             <a href="/edit/{{contact.id}}">
-                        {% comment %} <span class="glyphicon glyphicon-pencil"> {% endcomment %}
-                            <button type="button" class="btn btn-primary btn-sm">Edit</button>
-                            {% comment %} </span> {% endcomment %}
-                    </a>
+                        <td>
 
-                    <a href="/delete/{{ contact.id }}">
-                        <button type="button" class="btn btn-danger btn-sm"> Delete </button>
-                    </a>
-        </td>  
-    </tr>  
-{% endfor %}
+                            {% comment %} <a href="/profile/{{contact.contact_id}}">Profile</a> {% endcomment %}
+                            {% comment %} <a href="/edit/{{contact.id}}"><span
+                                    class="glyphicon glyphicon-pencil">Edit</span></a>
+                            <a href="/delete/{{ contact.id }}">Delete</a> {% endcomment %}
+                            <a href="/edit/{{contact.id}}">
+                                {% comment %} <span class="glyphicon glyphicon-pencil"> {% endcomment %}
+                                    <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                                    {% comment %} </span> {% endcomment %}
+                            </a>
 
-    </tbody>  
-</table>  
-</body>
+                            <a href="/delete/{{ contact.id }}">
+                                <button type="button" class="btn btn-danger btn-sm"> Delete </button>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+    </body>
 
     {% comment %} <center><a href="/" class="btn btn-primary">Add New Record</a></center> {% endcomment %}
 
-</div>
-<br>  
-<br>  
+    </div>
+    <br>
+    <br>
 
 </html>

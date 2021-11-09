@@ -9,60 +9,177 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Contact',
+            name="Contact",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('fname', models.CharField(max_length=100)),
-                ('mname', models.CharField(blank=True, max_length=100, null=True)),
-                ('lname', models.CharField(max_length=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("fname", models.CharField(max_length=100)),
+                ("mname", models.CharField(blank=True, max_length=100, null=True)),
+                ("lname", models.CharField(max_length=100)),
             ],
             options={
-                'db_table': 'contact',
+                "db_table": "contact",
             },
         ),
         migrations.CreateModel(
-            name='Phone',
+            name="Phone",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('phone_type', models.CharField(choices=[('home', 'home'), ('work', 'work'), ('other', 'other')], max_length=20, null=True)),
-                ('area_code', models.BigIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(100), django.core.validators.MaxValueValidator(999)])),
-                ('number', models.BigIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(1000000), django.core.validators.MaxValueValidator(9999999)])),
-                ('contact', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='phonecontact', to='crudapp.contact')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "phone_type",
+                    models.CharField(
+                        choices=[
+                            ("home", "home"),
+                            ("work", "work"),
+                            ("other", "other"),
+                        ],
+                        max_length=20,
+                        null=True,
+                    ),
+                ),
+                (
+                    "area_code",
+                    models.BigIntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[
+                            django.core.validators.MinValueValidator(100),
+                            django.core.validators.MaxValueValidator(999),
+                        ],
+                    ),
+                ),
+                (
+                    "number",
+                    models.BigIntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[
+                            django.core.validators.MinValueValidator(1000000),
+                            django.core.validators.MaxValueValidator(9999999),
+                        ],
+                    ),
+                ),
+                (
+                    "contact",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="phonecontact",
+                        to="crudapp.contact",
+                    ),
+                ),
             ],
             options={
-                'db_table': 'phone',
+                "db_table": "phone",
             },
         ),
         migrations.CreateModel(
-            name='Date',
+            name="Date",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_type', models.CharField(choices=[('birthday', 'birthday'), ('aniversary', 'aniversary'), ('other', 'other')], max_length=21, null=True)),
-                ('date', models.DateField(null=True)),
-                ('contact', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='datecontact', to='crudapp.contact')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "date_type",
+                    models.CharField(
+                        choices=[
+                            ("birthday", "birthday"),
+                            ("aniversary", "aniversary"),
+                            ("other", "other"),
+                        ],
+                        max_length=21,
+                        null=True,
+                    ),
+                ),
+                ("date", models.DateField(null=True)),
+                (
+                    "contact",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="datecontact",
+                        to="crudapp.contact",
+                    ),
+                ),
             ],
             options={
-                'db_table': 'date',
+                "db_table": "date",
             },
         ),
         migrations.CreateModel(
-            name='Address',
+            name="Address",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('address_type', models.CharField(blank=True, choices=[('home', 'home'), ('work', 'work'), ('other', 'other')], max_length=20, null=True)),
-                ('address', models.CharField(blank=True, max_length=500, null=True)),
-                ('city', models.CharField(blank=True, max_length=100, null=True)),
-                ('state', models.CharField(blank=True, max_length=20, null=True)),
-                ('zipcode', models.IntegerField(blank=True, max_length=5, null=True, validators=[django.core.validators.MinValueValidator(10000), django.core.validators.MaxValueValidator(99999)])),
-                ('contact', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='addresscontact', to='crudapp.contact')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "address_type",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("home", "home"),
+                            ("work", "work"),
+                            ("other", "other"),
+                        ],
+                        max_length=20,
+                        null=True,
+                    ),
+                ),
+                ("address", models.CharField(blank=True, max_length=500, null=True)),
+                ("city", models.CharField(blank=True, max_length=100, null=True)),
+                ("state", models.CharField(blank=True, max_length=20, null=True)),
+                (
+                    "zipcode",
+                    models.IntegerField(
+                        blank=True,
+                        max_length=5,
+                        null=True,
+                        validators=[
+                            django.core.validators.MinValueValidator(10000),
+                            django.core.validators.MaxValueValidator(99999),
+                        ],
+                    ),
+                ),
+                (
+                    "contact",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="addresscontact",
+                        to="crudapp.contact",
+                    ),
+                ),
             ],
             options={
-                'db_table': 'address',
+                "db_table": "address",
             },
         ),
     ]
